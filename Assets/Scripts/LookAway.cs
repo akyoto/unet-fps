@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LookAt : MonoBehaviour {
+public class LookAway : MonoBehaviour {
 	public Transform target;
 	
 	// Update
 	void Update() {
-		transform.LookAt(target);
+		transform.rotation = Quaternion.LookRotation(transform.position - target.position);
 	}
 }

@@ -36,11 +36,15 @@ public class PlayerController : MonoBehaviour {
 			inputVector.x += 1f;
 		}
 
-		if(Input.GetKey(KeyCode.Space)) {
+		player.moveVector = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y, Vector3.up) * inputVector;
+		player.moveVector.Normalize();
+
+		if(Input.GetKeyDown(KeyCode.Space)) {
 			player.Jump();
 		}
 
-		player.moveVector = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y, Vector3.up) * inputVector;
-		player.moveVector.Normalize();
+		if(Input.GetKeyDown(KeyCode.LeftShift)) {
+			player.Dash();
+		}
 	}
 }

@@ -39,6 +39,6 @@ public class Health : MonoBehaviour {
 	
 	// Update
 	void Update() {
-		healthBar.rectTransform.anchorMin = new Vector2(1f - health / (float)maxHealth, 0f);
+		healthBar.rectTransform.anchorMax = new Vector2(health / (float)maxHealth, 1f);
 	}
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 	public float moveSpeed;
+	public float dashForce;
+	public float jumpForce;
 
 	public Vector3 moveVector {
 		get;
@@ -19,7 +21,12 @@ public class Player : MonoBehaviour {
 
 	// Jump
 	public void Jump() {
-		rigidBody.AddForce(new Vector3(0, 0.2f, 0), ForceMode.Impulse);
+		rigidBody.AddForce(new Vector3(0, jumpForce, 0), ForceMode.Impulse);
+	}
+
+	// Dash
+	public void Dash() {
+		rigidBody.AddForce(moveVector * dashForce, ForceMode.Impulse);
 	}
 	
 	// Update
