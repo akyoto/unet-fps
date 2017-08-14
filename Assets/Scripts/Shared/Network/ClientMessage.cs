@@ -1,3 +1,4 @@
 ﻿public enum ClientMessage : short {
-	Ping
+	Ping,
+	Position
 }

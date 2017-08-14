@@ -10,7 +10,7 @@ public class ServerPing : MonoBehaviour {
 
 	// Ping
 	[NetworkCall(ClientMessage.Ping)]
-	public void Ping(NetworkPlayer player, long timeStamp) {
+	public void Ping(NetworkTarget player, long timeStamp) {
 		var ping = Utils.GetTimeStamp() - timeStamp;
 
 		// Send ping back to client

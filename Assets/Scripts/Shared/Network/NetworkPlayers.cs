@@ -2,23 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class NetworkPlayers {
-	public static Dictionary<int, NetworkPlayer> map = new Dictionary<int, NetworkPlayer>();
-	public static List<NetworkPlayer> list = new List<NetworkPlayer>();
+	public static Dictionary<int, NetworkTarget> map = new Dictionary<int, NetworkTarget>();
+	public static List<NetworkTarget> list = new List<NetworkTarget>();
 
 	// Add
-	public static void Add(NetworkPlayer player) {
+	public static void Add(NetworkTarget player) {
 		map.Add(player.connectionId, player);
 		list.Add(player);
 	}
 
 	// Remove
-	public static void Remove(NetworkPlayer player) {
+	public static void Remove(NetworkTarget player) {
 		map.Remove(player.connectionId);
 		list.Remove(player);
 	}
 
 	// Find
-	public static NetworkPlayer Find(int connectionId) {
+	public static NetworkTarget Find(int connectionId) {
 		return map[connectionId];
 	}
 }

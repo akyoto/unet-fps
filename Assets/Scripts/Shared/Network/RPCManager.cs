@@ -15,10 +15,11 @@ public class RPCManager : SingletonMonoBehaviour<RPCManager> {
 		// Message type
 		MessageType msgType = reader.ReadByte();
 
-		var call = functions[msgType];
+		NetworkCall call;
+		bool exists = functions.TryGetValue(msgType, out call);
 
-		if(call == null) {
-			Debug.Log("Unknown message type: " + msgType);
+		if(!exists) {
+			Debug.LogError("Unknown message type: " + msgType);
 			return;
 		}
 
@@ -29,7 +30,7 @@ public class RPCManager : SingletonMonoBehaviour<RPCManager> {
 			var param = methodParams[i];
 			var paramType = param.ParameterType;
 
-			if(paramType == typeof(NetworkPlayer)) {
+			if(paramType == typeof(NetworkTarget)) {
 				invokeParams[i] = NetworkPlayers.Find(connectionId);
 				continue;
 			}

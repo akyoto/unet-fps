@@ -26,13 +26,9 @@ public class Ping : MonoBehaviour {
 		
 		lastPacketTime = Time.time;
 		
+		// Send timestamp to server
 		var timeStamp = Utils.GetTimeStamp();
-
-		var writer = new NetworkWriter();
-		writer.Write((MessageType)ClientMessage.Ping);
-		writer.Write(timeStamp);
-
-		Client.instance.SendToServer(writer.ToArray());
+		Client.server.Send(ClientMessage.Ping, timeStamp);
 	}
 
 	[NetworkCall(ServerMessage.Ping)]

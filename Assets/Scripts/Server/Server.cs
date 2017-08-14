@@ -49,7 +49,7 @@ public class Server : SingletonMonoBehaviour<Server> {
 		onConnect += (connectionId) => {
 			Debug.Log("Player " + connectionId + " connected.");
 
-			var player = new NetworkPlayer(connectionId);
+			var player = new NetworkTarget(connectionId);
 			NetworkPlayers.Add(player);
 
 			// Send connected message

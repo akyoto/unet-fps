@@ -30,6 +30,9 @@ public class Client : SingletonMonoBehaviour<Client> {
 	private bool isStarted;
 
 	[NonSerialized]
+	public static NetworkTarget server;
+
+	[NonSerialized]
 	public bool isConnected;
 
 	// Start
@@ -47,6 +50,9 @@ public class Client : SingletonMonoBehaviour<Client> {
 
 		hostId = NetworkTransport.AddHost(hostTopology, 0);
 		connectionId = NetworkTransport.Connect(hostId, address, port, 0, out error);
+		
+		server = new NetworkTarget(connectionId);
+		NetworkPlayers.Add(server);
 
 		if((NetworkError)error != NetworkError.Ok) {
 			Console.instance.Log("Connection failed: " + (NetworkError)error);
@@ -83,10 +89,19 @@ public class Client : SingletonMonoBehaviour<Client> {
 				break;
 		}
 	}
+	// Send
+	public void Send(byte[] buffer, int connectionId, int channelId) {
+		NetworkTransport.Send(hostId, connectionId, channelId, buffer, buffer.Length, out error);
+	}
 
-	// SendToServer
-	public void SendToServer(byte[] buffer) {
-		NetworkTransport.Send(hostId, connectionId, reliableChannel, buffer, buffer.Length, out error);
+	// Send
+	public void Send(byte[] buffer, int connectionId) {
+		Send(buffer, connectionId, reliableChannel);
+	}
+
+	// SendUnreliable
+	public void SendUnreliable(byte[] buffer, int connectionId) {
+		Send(buffer, connectionId, unreliableChannel);
 	}
 
 	// Connected

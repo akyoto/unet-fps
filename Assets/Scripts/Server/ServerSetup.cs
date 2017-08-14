@@ -5,7 +5,10 @@ using UnityEngine;
 public class ServerSetup : MonoBehaviour {
 	// Start
 	void Start() {
+		// Limit FPS
 		Application.targetFrameRate = (int)(1f / Time.fixedDeltaTime);
-		Debug.Log("FPS: " + Application.targetFrameRate);
+
+		// No audio
+		AudioListener.pause = true;
 	}
 }
