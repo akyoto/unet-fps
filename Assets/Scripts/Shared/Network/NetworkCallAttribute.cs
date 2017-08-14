@@ -6,12 +6,12 @@ public class NetworkCallAttribute : System.Attribute {
 	public MessageType msgType;
 
 	// Constructor
-	public NetworkCallAttribute(ClientMessageType msgType) {
+	public NetworkCallAttribute(ClientMessage msgType) {
 		this.msgType = (MessageType) msgType;
 	}
 
 	// Constructor
-	public NetworkCallAttribute(ServerMessageType msgType) {
+	public NetworkCallAttribute(ServerMessage msgType) {
 		this.msgType = (MessageType) msgType;
 	}
 }

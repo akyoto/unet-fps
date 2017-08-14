@@ -14,10 +14,6 @@ public class Server : SingletonMonoBehaviour<Server> {
 	public int port;
 	public ConnectionConfig config;
 
-	// Player list
-	[NonSerialized]
-	public Dictionary<int, NetworkPlayer> players = new Dictionary<int, NetworkPlayer>();
-
 	// Connect event
 	public delegate void ConnectHandler(int connectionId);
 	public event ConnectHandler onConnect;
@@ -40,7 +36,6 @@ public class Server : SingletonMonoBehaviour<Server> {
 	// Start
 	void Start() {
 		NetworkTransport.Init();
-		RPCManager.instance.Register(this);
 
 		reliableChannel = config.AddChannel(QosType.Reliable);
 		unreliableChannel = config.AddChannel(QosType.Unreliable);
@@ -55,15 +50,15 @@ public class Server : SingletonMonoBehaviour<Server> {
 			Debug.Log("Player " + connectionId + " connected.");
 
 			var player = new NetworkPlayer(connectionId);
-			players[connectionId] = player;
+			NetworkPlayers.Add(player);
 
 			// Send connected message
-			player.Send(ServerMessageType.Connected);
+			player.Send(ServerMessage.Connected);
 		};
 
 		onDisconnect += (connectionId) => {
 			Debug.Log("Player " + connectionId + " disconnected.");
-			players.Remove(connectionId);
+			NetworkPlayers.Remove(NetworkPlayers.Find(connectionId));
 		};
 
 		isStarted = true;
@@ -99,16 +94,6 @@ public class Server : SingletonMonoBehaviour<Server> {
 				onDisconnect(connectionId);
 				break;
 		}
-	}
-
-	[NetworkCall(ClientMessageType.Ping)]
-	public void Ping(NetworkPlayer player, long timeStamp) {
-		var ping = Utils.GetTimeStamp() - timeStamp;
-
-		Debug.Log(ping + " ms");
-
-		// Send ping back to client
-		player.Send(ServerMessageType.Ping, ping);
 	}
 
 	// Send

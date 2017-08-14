@@ -18,24 +18,22 @@ public class NetworkPlayer {
 	}
 
 	// Send
-	public void Send(ClientMessageType messageType, params object[] arguments) {
-		var writer = new NetworkWriter();
-		writer.Write((MessageType) messageType);
-		
-		for(var i = 0; i < arguments.Length; i++) {
-			RPCManager.Write(writer, arguments[i]);
-		}
-
-		Send(writer.ToArray());
+	public void Send(ClientMessage messageType, params object[] arguments) {
+		Send((MessageType) messageType, arguments);
 	}
 
 	// Send
-	public void Send(ServerMessageType messageType, params object[] arguments) {
+	public void Send(ServerMessage messageType, params object[] arguments) {
+		Send((MessageType) messageType, arguments);
+	}
+
+	// Send
+	public void Send(MessageType messageType, params object[] arguments) {
 		var writer = new NetworkWriter();
 		writer.Write((MessageType) messageType);
 		
 		for(var i = 0; i < arguments.Length; i++) {
-			RPCManager.Write(writer, arguments[i]);
+			Serialization.Write(writer, arguments[i]);
 		}
 
 		Send(writer.ToArray());

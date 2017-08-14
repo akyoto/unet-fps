@@ -90,7 +90,7 @@ public class Client : SingletonMonoBehaviour<Client> {
 	}
 
 	// Connected
-	[NetworkCall(ServerMessageType.Connected)]
+	[NetworkCall(ServerMessage.Connected)]
 	public void Connected() {
 		onConnect();
 	}

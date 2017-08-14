@@ -29,13 +29,13 @@ public class Ping : MonoBehaviour {
 		var timeStamp = Utils.GetTimeStamp();
 
 		var writer = new NetworkWriter();
-		writer.Write((MessageType)ClientMessageType.Ping);
+		writer.Write((MessageType)ClientMessage.Ping);
 		writer.Write(timeStamp);
 
 		Client.instance.SendToServer(writer.ToArray());
 	}
 
-	[NetworkCall(ServerMessageType.Ping)]
+	[NetworkCall(ServerMessage.Ping)]
 	public void ReceiveLatency(long latency) {
 		Console.instance.Log("Ping: " + latency + " ms");
 	}
