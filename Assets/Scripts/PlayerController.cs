@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Player))]
 public class PlayerController : MonoBehaviour {
+	public Camera cam;
 	private Player player;
 	private Vector3 inputVector;
 
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour {
 			inputVector.x += 1f;
 		}
 
-		player.moveVector = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y, Vector3.up) * inputVector;
+		player.moveVector = Quaternion.AngleAxis(cam.transform.rotation.eulerAngles.y, Vector3.up) * inputVector;
 		player.moveVector.Normalize();
 
 		if(Input.GetKeyDown(KeyCode.Space)) {

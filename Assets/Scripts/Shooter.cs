@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Shooter : MonoBehaviour {
+	public Camera cam;
 	public GameObject lineEffect;
 	public Transform gunShotStart;
 	public float fireRate;
@@ -22,9 +23,7 @@ public class Shooter : MonoBehaviour {
 
 		lineRenderer.SetPosition(0, gunShotStart.position);
 
-		var cam = Camera.main.transform;
-
-		if(Physics.Raycast(cam.position, cam.forward, out hit)) {
+		if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit)) {
 			Console.instance.Log("Hit " + hit.collider.gameObject.name);
 
 			lineRenderer.SetPosition(1, hit.point);
@@ -38,7 +37,7 @@ public class Shooter : MonoBehaviour {
 		} else {
 			Console.instance.Log("Hit nothing");
 
-			lineRenderer.SetPosition(1, Camera.main.transform.position + Camera.main.transform.forward * 1000f);
+			lineRenderer.SetPosition(1, cam.transform.position + cam.transform.forward * 1000f);
 		}
 	}
 }
